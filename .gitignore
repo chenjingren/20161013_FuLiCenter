@@ -24,6 +24,7 @@ captures/
 
 /local.properties
 /.idea/workspace.xml
+/.idea/misc.xml
 /.idea/libraries
 /build
 /captures
