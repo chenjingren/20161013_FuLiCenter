@@ -8,7 +8,7 @@ import cn.ucai.fulicenter.R;
 
 public class SplashActivity extends Activity {
 
-    private long sleepTime = 2000;
+    private static final long sleepTime = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +23,7 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
+                //create db
                 long costTime = System.currentTimeMillis() - startTime;
                 if (sleepTime-costTime>0){
                     try {
@@ -32,6 +33,8 @@ public class SplashActivity extends Activity {
                     }
                 }
                 startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+                finish();
             }
         }).start();
     }
