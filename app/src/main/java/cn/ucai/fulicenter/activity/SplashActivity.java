@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class SplashActivity extends Activity {
 
@@ -33,8 +34,10 @@ public class SplashActivity extends Activity {
                     }
                 }
                 startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
-                finish();
+                //overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+                //finish();
+                MFGT.gotoMainActivity(SplashActivity.this);
+                MFGT.finish(SplashActivity.this);
             }
         }).start();
     }
