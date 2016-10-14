@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 
 public class SplashActivity extends Activity {
 
     private static final long sleepTime = 2000;
 
+    private static final String TAG = SplashActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +29,7 @@ public class SplashActivity extends Activity {
                 //create db
                 long costTime = System.currentTimeMillis() - startTime;
                 if (sleepTime-costTime>0){
+                    L.e(TAG,costTime+"");
                     try {
                         Thread.sleep(sleepTime-costTime);
                     } catch (InterruptedException e) {
