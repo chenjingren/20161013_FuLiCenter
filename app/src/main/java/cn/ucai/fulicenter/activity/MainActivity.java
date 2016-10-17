@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -16,6 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = MainActivity.class.getName();
 
+
+    RadioButton rb[];
+    int index;
     @BindView(R.id.rb_new_good)
     RadioButton rbNewGood;
     @BindView(R.id.rb_boutique)
@@ -28,9 +30,6 @@ public class MainActivity extends AppCompatActivity {
     TextView tvCartHint;
     @BindView(R.id.rb_personal_center)
     RadioButton rbPersonalCenter;
-
-    RadioButton rb[];
-    int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,32 +49,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onCheckedChange(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.rb_new_good:
-                index=0;
+                index = 0;
                 break;
             case R.id.rb_boutique:
-                index=1;
+                index = 1;
                 break;
             case R.id.rb_category:
-                index=2;
+                index = 2;
                 break;
             case R.id.rb_cart:
-                index=3;
+                index = 3;
                 break;
             case R.id.rb_personal_center:
-                index=4;
+                index = 4;
                 break;
         }
         setRadioButtonStatus();
     }
 
     private void setRadioButtonStatus() {
-        L.e(TAG,"index==="+index);
-        for(int i=0;i<rb.length;i++){
-            if (index==i){
+        L.e(TAG, "index===" + index);
+        for (int i = 0; i < rb.length; i++) {
+            if (index == i) {
                 rb[i].setChecked(true);
-            }else {
+            } else {
                 rb[i].setChecked(false);
             }
         }
