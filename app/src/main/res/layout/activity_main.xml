@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <RadioButton
-                android:id="@+id/layout_new_good"
+                android:id="@+id/rb_new_good"
                 android:drawableTop="@drawable/selector_menu_item_new_good"
                 style="@style/menu_item_style"
                 android:text="新品"
@@ -26,7 +26,7 @@
                 android:textColor="@color/main_botton_text_color"
                 android:checked="true"/>
             <RadioButton
-                android:id="@+id/layout_boutique"
+                android:id="@+id/rb_boutique"
                 android:drawableTop="@drawable/selector_menu_item_boutique"
                 style="@style/menu_item_style"
                 android:text="精选"
@@ -34,7 +34,7 @@
                 android:textColor="@color/main_botton_text_color"
                 android:checked="false"/>
             <RadioButton
-                android:id="@+id/layout_category"
+                android:id="@+id/rb_category"
                 android:drawableTop="@drawable/selector_menu_item_category"
                 style="@style/menu_item_style"
                 android:text="分类"
@@ -44,7 +44,7 @@
             <RelativeLayout
                 style="@style/style_menu_item">
                 <RadioButton
-                    android:id="@+id/layout_cart"
+                    android:id="@+id/rb_cart"
                     android:drawableTop="@drawable/selector_menu_item_cart"
                     style="@style/menu_item_style_cart"
                     android:text="购物车"
@@ -79,7 +79,7 @@
                 </LinearLayout>
             </RelativeLayout>
             <RadioButton
-                android:id="@+id/layout_personal_center"
+                android:id="@+id/rb_personal_center"
                 android:drawableTop="@drawable/selector_menu_item_personal_center"
                 style="@style/menu_item_style"
                 android:text="我"
