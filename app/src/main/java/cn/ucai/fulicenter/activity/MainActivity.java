@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initFragment() {
         newGoodsFragment = new NewGoodsFragment();
+        mFragments = new Fragment[5];
         mFragments[0] = newGoodsFragment;
         getSupportFragmentManager()
                 .beginTransaction()
