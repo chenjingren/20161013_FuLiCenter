@@ -24,7 +24,8 @@ public class GoodsAdapter extends RecyclerView.Adapter{
 
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mNewGoodsList) {
         this.mContext = mContext;
-        this.mNewGoodsList = mNewGoodsList;
+        this.mNewGoodsList = new ArrayList<>();
+        mNewGoodsList.addAll(this.mNewGoodsList);
     }
 
     @Override
@@ -63,6 +64,14 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         }
             return I.TYPE_ITEM;
 
+    }
+
+    public void initList(ArrayList<NewGoodsBean> goodsList) {
+        if (mNewGoodsList!=null){
+            mNewGoodsList.clear();
+        }
+        mNewGoodsList.addAll(goodsList);
+        notifyDataSetChanged();
     }
 
     class NewGoodsViewHolder extends RecyclerView.ViewHolder{
