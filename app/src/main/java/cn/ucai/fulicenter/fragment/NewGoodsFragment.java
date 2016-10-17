@@ -40,7 +40,7 @@ public class NewGoodsFragment extends Fragment {
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
 
-    public static final int PAGE_ID = 0;
+    public static final int PAGE_ID = 1;
 
     GridLayoutManager mGridLayoutManager;
 
