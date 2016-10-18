@@ -22,6 +22,7 @@ import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
@@ -103,10 +104,9 @@ public class NewGoodsFragment extends Fragment {
                 tvRefresh.setVisibility(View.GONE);
                 srl.setRefreshing(false);
                 mAdapter.setMore(false);
+                CommonUtils.showLongToast(error);
                 L.e(TAG,"error=="+error);
             }
         });
     }
-
-
 }
