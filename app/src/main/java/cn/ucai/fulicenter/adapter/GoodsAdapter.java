@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.GoodDetailsActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
@@ -74,6 +76,15 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         goodsViewHolder.tvGoodsPrice.setText(goods.getCurrencyPrice());
         goodsViewHolder.tvGoodsName.setText(goods.getGoodsName());
         ImageLoader.downloadImg(mContext,goodsViewHolder.ivGoodsThumb,goods.getGoodsThumb());
+
+        final int goodsId = goods.getGoodsId();
+        goodsViewHolder.layoutItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, GoodDetailsActivity.class)
+                        .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+            }
+        });
     }
 
     private int getFooterText() {
@@ -118,7 +129,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             tvGoodsName = (TextView) itemView.findViewById(R.id.tvGoodsName);
             tvGoodsPrice = (TextView) itemView.findViewById(R.id.tvGoodsPrice);
             //设置列表项单击事件监听
-            //layoutItem.setOnClickListener(mOnItemClickListener);
+            //
         }
     }
     class FooterViewHolder extends RecyclerView.ViewHolder{
