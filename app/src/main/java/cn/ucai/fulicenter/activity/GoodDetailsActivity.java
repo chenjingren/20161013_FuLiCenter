@@ -8,12 +8,15 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
@@ -89,9 +92,43 @@ public class GoodDetailsActivity extends AppCompatActivity {
         tvGoodNameEnglish.setText(goodsDetails.getGoodsEnglishName());
         tvGoodPriceCurrent.setText(goodsDetails.getCurrencyPrice());
         tvGoodPriceShop.setText(goodsDetails.getShopPrice());
+
+        salv.startPlayLoop(indicator,getAlbumUrl(goodsDetails),getAlbumCount(goodsDetails));
+        wvGoodBrief.loadDataWithBaseURL(null,goodsDetails.getGoodsBrief(),I.TEXT_HTML,I.UTF_8,null);
+    }
+
+    private String[] getAlbumUrl(GoodsDetailsBean goodsDetails) {
+        String[] url = new String[]{};
+        if (goodsDetails.getPropertiesBean()!=null && goodsDetails.getPropertiesBean().length>0){
+            AlbumsBean[] albumsBean =
+                    goodsDetails.getPropertiesBean()[0].getAlbumsBean();
+            for (int i = 0;i<albumsBean.length;i++){
+                url = new String[albumsBean.length];
+                url[i] = albumsBean[i].getImgUrl();
+            }
+        }
+        return url;
+    }
+
+    private int getAlbumCount(GoodsDetailsBean goodsDetails) {
+        if (goodsDetails.getPropertiesBean()!=null && goodsDetails.getPropertiesBean().length>0) {
+                    return goodsDetails.getPropertiesBean()[0].getAlbumsBean().length;
+        }
+        return 0;
     }
 
     private void setListener() {
 
+    }
+
+    @OnClick(R.id.backClickArea)
+    public void onBackClick(){
+        MFGT.finish(mContext);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        MFGT.finish(mContext);
     }
 }
