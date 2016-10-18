@@ -1,13 +1,45 @@
 package cn.ucai.fulicenter.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.views.FlowIndicator;
+import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
 public class GoodDetailsActivity extends AppCompatActivity {
+
+    @BindView(R.id.backClickArea)
+    LinearLayout backClickArea;
+    @BindView(R.id.tv_good_name_english)
+    TextView tvGoodNameEnglish;
+    @BindView(R.id.tv_good_name)
+    TextView tvGoodName;
+    @BindView(R.id.tv_good_price_shop)
+    TextView tvGoodPriceShop;
+    @BindView(R.id.tv_good_price_current)
+    TextView tvGoodPriceCurrent;
+    @BindView(R.id.salv)
+    SlideAutoLoopView salv;
+    @BindView(R.id.indicator)
+    FlowIndicator indicator;
+    @BindView(R.id.wv_good_brief)
+    WebView wvGoodBrief;
+
+    int goodsId;
+
+    GoodDetailsActivity mContext;
 
     public static final String TAG = GoodDetailsActivity.class.getName();
 
@@ -15,7 +47,51 @@ public class GoodDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_good_details);
-        int goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
-        L.e(TAG,"goodsId====="+goodsId);
+        ButterKnife.bind(this);
+        goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
+        L.e(TAG, "goodsId=====" + goodsId);
+        if (goodsId==0){
+            finish();
+        }
+        mContext = this;
+        initView();
+        initData();
+        setListener();
+    }
+
+    private void initView() {
+
+    }
+
+    private void initData() {
+        NetDao.downloadGoodDetails(mContext, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
+            @Override
+            public void onSuccess(GoodsDetailsBean result) {
+                L.e(TAG,"RESULT==="+result);
+                if (result!=null){
+                    showGoodDetails(result);
+                }else {
+                    finish();
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                L.e(TAG,"ERROR===="+error);
+                CommonUtils.showLongToast(error);
+                finish();
+            }
+        });
+    }
+
+    private void showGoodDetails(GoodsDetailsBean goodsDetails) {
+        tvGoodName.setText(goodsDetails.getGoodsName());
+        tvGoodNameEnglish.setText(goodsDetails.getGoodsEnglishName());
+        tvGoodPriceCurrent.setText(goodsDetails.getCurrencyPrice());
+        tvGoodPriceShop.setText(goodsDetails.getShopPrice());
+    }
+
+    private void setListener() {
+
     }
 }
