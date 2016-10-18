@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
-import cn.ucai.fulicenter.holder.FooterViewHolder;
 import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
@@ -22,10 +21,28 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     Context mContext;
     ArrayList<NewGoodsBean> mNewGoodsList;
 
+    boolean isMore;
+
+    String tvFooter;
+
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mNewGoodsList) {
         this.mContext = mContext;
         this.mNewGoodsList = new ArrayList<>();
         mNewGoodsList.addAll(this.mNewGoodsList);
+    }
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+        notifyDataSetChanged();
+    }
+
+    public void setTvFooter(String tvFooter) {
+        this.tvFooter = tvFooter;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -42,14 +59,19 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position)== I.TYPE_FOOTER){
-
-            return;
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+            footerViewHolder.mtvFooter.setText(getFooterText());
+            //return;
         }
         NewGoodsBean goods = mNewGoodsList.get(position);
         NewGoodsViewHolder goodsViewHolder = (NewGoodsViewHolder) holder;
         goodsViewHolder.tvGoodsPrice.setText(goods.getCurrencyPrice());
         goodsViewHolder.tvGoodsName.setText(goods.getGoodsName());
         ImageLoader.downloadImg(mContext,goodsViewHolder.ivGoodsThumb,goods.getGoodsThumb());
+    }
+
+    private int getFooterText() {
+        return isMore?R.string.load_more:R.string.no_more;
     }
 
     @Override
@@ -63,7 +85,6 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             return I.TYPE_FOOTER;
         }
             return I.TYPE_ITEM;
-
     }
 
     public void initList(ArrayList<NewGoodsBean> goodsList) {
@@ -87,6 +108,13 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             tvGoodsPrice = (TextView) itemView.findViewById(R.id.tvGoodsPrice);
             //设置列表项单击事件监听
             //layoutItem.setOnClickListener(mOnItemClickListener);
+        }
+    }
+    class FooterViewHolder extends RecyclerView.ViewHolder{
+        TextView mtvFooter;
+        public FooterViewHolder(View itemView) {
+            super(itemView);
+            mtvFooter = (TextView) itemView.findViewById(R.id.tvFooter);
         }
     }
 }
