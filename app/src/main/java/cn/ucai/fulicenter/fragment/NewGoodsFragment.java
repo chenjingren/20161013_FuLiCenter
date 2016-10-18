@@ -87,16 +87,22 @@ public class NewGoodsFragment extends Fragment {
         NetDao.downloadNewGoods(context, PAGE_ID, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
+                tvRefresh.setVisibility(View.GONE);
+                srl.setRefreshing(false);
                 if (result!=null &&result.length>0){
                     ArrayList<NewGoodsBean> goodsList = ConvertUtils.array2List(result);
                     mAdapter.initList(goodsList);
-                    tvRefresh.setVisibility(View.GONE);
-                    srl.setRefreshing(false);
+                    if (goodsList.size()<I.PAGE_SIZE_DEFAULT){
+                        mAdapter.setMore(false);
+                    }
                 }
             }
 
             @Override
             public void onError(String error) {
+                tvRefresh.setVisibility(View.GONE);
+                srl.setRefreshing(false);
+                mAdapter.setMore(false);
                 L.e(TAG,"error=="+error);
             }
         });
