@@ -13,11 +13,15 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 
 /**
  * Created by ACherish on 2016/10/17.
  */
 public class GoodsAdapter extends RecyclerView.Adapter{
+
+    public static final String TAG = GoodsAdapter.class.getName();
+
     Context mContext;
     ArrayList<NewGoodsBean> mNewGoodsList;
 
@@ -28,7 +32,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
     public GoodsAdapter(Context mContext, ArrayList<NewGoodsBean> mNewGoodsList) {
         this.mContext = mContext;
         this.mNewGoodsList = new ArrayList<>();
-        mNewGoodsList.addAll(this.mNewGoodsList);
+        this.mNewGoodsList.addAll(mNewGoodsList);
     }
 
     public boolean isMore() {
@@ -58,11 +62,13 @@ public class GoodsAdapter extends RecyclerView.Adapter{
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        L.e(TAG,"onBindViewHolder position======="+position);
         if (getItemViewType(position)== I.TYPE_FOOTER){
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
             footerViewHolder.mtvFooter.setText(getFooterText());
-            //return;
+            return;
         }
+        //L.e(TAG,"onBindViewHolder position======="+position);
         NewGoodsBean goods = mNewGoodsList.get(position);
         NewGoodsViewHolder goodsViewHolder = (NewGoodsViewHolder) holder;
         goodsViewHolder.tvGoodsPrice.setText(goods.getCurrencyPrice());
