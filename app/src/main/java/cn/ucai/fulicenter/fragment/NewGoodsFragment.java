@@ -41,7 +41,7 @@ public class NewGoodsFragment extends Fragment {
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
 
-    public static final int PAGE_ID = 1;
+    public static int pageId = 1;
 
     GridLayoutManager mGridLayoutManager;
 
@@ -63,7 +63,83 @@ public class NewGoodsFragment extends Fragment {
         context = (MainActivity) getContext();
         initView();
         initData();
+        setListener();
         return layout;
+    }
+
+    private void setListener() {
+        setPullDownloadListener();
+        setPullUpListener();
+    }
+
+    private void setPullUpListener() {
+        rl.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastPosition = mGridLayoutManager.findLastVisibleItemPosition();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastPosition==mAdapter.getItemCount()-1
+                        && mAdapter.isMore()){
+                    pageId++;
+                    downLoadNewGoods(I.ACTION_PULL_UP);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int firstPosition = mGridLayoutManager.findFirstVisibleItemPosition();
+                srl.setEnabled(firstPosition==0);
+            }
+        });
+    }
+
+    private void setPullDownloadListener() {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl.setRefreshing(true);
+                tvRefresh.setVisibility(View.VISIBLE);
+                pageId=1;
+                downLoadNewGoods(I.ACTION_PULL_DOWN);
+            }
+        });
+    }
+
+    private void downLoadNewGoods(final int action) {
+        NetDao.downloadNewGoods(context, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+            @Override
+            public void onSuccess(NewGoodsBean[] result) {
+                tvRefresh.setVisibility(View.GONE);
+                srl.setRefreshing(false);
+                mAdapter.setMore(true);
+                if (result!=null &&result.length>0){
+                    ArrayList<NewGoodsBean> goodsList = ConvertUtils.array2List(result);
+                    if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN){
+                        mAdapter.initList(goodsList);
+                    }else {
+                        mAdapter.addList(goodsList);
+                    }
+                    if (goodsList.size()<I.PAGE_SIZE_DEFAULT){
+                        mAdapter.setMore(false);
+                    }
+                }else {
+                    tvRefresh.setVisibility(View.GONE);
+                    srl.setRefreshing(false);
+                    mAdapter.setMore(false);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                tvRefresh.setVisibility(View.GONE);
+                srl.setRefreshing(false);
+                mAdapter.setMore(false);
+                CommonUtils.showLongToast(error);
+                L.e(TAG,"error=="+error);
+            }
+        });
     }
 
     private void initView() {
@@ -81,32 +157,9 @@ public class NewGoodsFragment extends Fragment {
         mList = new ArrayList<NewGoodsBean>();
         mAdapter = new GoodsAdapter(context,mList);
         rl.setAdapter(mAdapter);
-
     }
 
     private void initData() {
-        NetDao.downloadNewGoods(context, PAGE_ID, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
-            @Override
-            public void onSuccess(NewGoodsBean[] result) {
-                tvRefresh.setVisibility(View.GONE);
-                srl.setRefreshing(false);
-                if (result!=null &&result.length>0){
-                    ArrayList<NewGoodsBean> goodsList = ConvertUtils.array2List(result);
-                    mAdapter.initList(goodsList);
-                    if (goodsList.size()<I.PAGE_SIZE_DEFAULT){
-                        mAdapter.setMore(false);
-                    }
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-                tvRefresh.setVisibility(View.GONE);
-                srl.setRefreshing(false);
-                mAdapter.setMore(false);
-                CommonUtils.showLongToast(error);
-                L.e(TAG,"error=="+error);
-            }
-        });
+        downLoadNewGoods(I.ACTION_DOWNLOAD);
     }
 }

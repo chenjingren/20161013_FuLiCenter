@@ -101,6 +101,11 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         notifyDataSetChanged();
     }
 
+    public void addList(ArrayList<NewGoodsBean> goodsList) {
+        mNewGoodsList.addAll(goodsList);
+        notifyDataSetChanged();
+    }
+
     class NewGoodsViewHolder extends RecyclerView.ViewHolder{
         View layoutItem;
         ImageView ivGoodsThumb;
