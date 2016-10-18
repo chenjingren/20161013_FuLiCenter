@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.GoodDetailsActivity;
+import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by ACherish on 2016/10/17.
@@ -81,8 +83,9 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         goodsViewHolder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, GoodDetailsActivity.class)
-                        .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+                /*mContext.startActivity(new Intent(mContext, GoodDetailsActivity.class)
+                        .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));*/
+                MFGT.gotoGoodDetailsActivity(mContext,goodsId);
             }
         });
     }
