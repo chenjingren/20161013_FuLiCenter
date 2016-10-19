@@ -149,9 +149,8 @@ public class BoutiqueFragment extends Fragment {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
                         lastPosition == mAdapter.getItemCount()-1 &&
                         mAdapter.isMore()){
-
+                    showBoutique(I.ACTION_DOWNLOAD);
                 }
-
             }
 
             @Override
