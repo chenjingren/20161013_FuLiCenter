@@ -111,7 +111,7 @@ public class NewGoodsFragment extends BaseFragment {
     }
 
     private void downLoadNewGoods(final int action) {
-        NetDao.downloadNewGoods(context, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(context,I.CAT_ID ,pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 tvRefresh.setVisibility(View.GONE);
