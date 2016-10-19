@@ -4,6 +4,7 @@ import android.content.Context;
 import android.media.MediaPlayer;
 
 import cn.ucai.fulicenter.I;
+import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
@@ -28,6 +29,13 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
                 .addParam(I.GoodsDetails.KEY_GOODS_ID,String.valueOf(goodsId))
                 .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
+    }
+
+    public static void downloadBoutique(Context context, OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
+        OkHttpUtils utils = new OkHttpUtils(context);
+        utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
+                .targetClass(BoutiqueBean[].class)
                 .execute(listener);
     }
 }
