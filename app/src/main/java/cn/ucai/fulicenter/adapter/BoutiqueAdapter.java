@@ -37,7 +37,9 @@ public class BoutiqueAdapter extends Adapter {
 
     String tvFooterText;
 
-    int catId;
+    //int catId;
+
+    BoutiqueBean bean;
 
     public BoutiqueAdapter(Context context, ArrayList<BoutiqueBean> list) {
         this.mContext = context;
@@ -88,7 +90,8 @@ public class BoutiqueAdapter extends Adapter {
             ((BoutiqueViewHolder) holder).tvDes.setText(boutiqueBean.getDescription());
             ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl());
             //catId = boutiqueBean.getId();
-            ((BoutiqueViewHolder) holder).layoutItemBoutique.setTag(boutiqueBean.getId());
+            //((BoutiqueViewHolder) holder).layoutItemBoutique.setTag(boutiqueBean.getId());
+            ((BoutiqueViewHolder) holder).layoutItemBoutique.setTag(boutiqueBean);
         }
     }
 
@@ -137,8 +140,9 @@ public class BoutiqueAdapter extends Adapter {
 
         @OnClick(R.id.layout_item_boutique)
         public void onItemClick(){
-            catId = (int) layoutItemBoutique.getTag();
-            MFGT.gotoBoutiqueChildActivity(mContext,catId);
+            //catId = (int) layoutItemBoutique.getTag();
+            bean = (BoutiqueBean) layoutItemBoutique.getTag();
+            MFGT.gotoBoutiqueChildActivity(mContext,bean);
         }
     }
 }

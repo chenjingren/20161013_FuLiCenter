@@ -17,11 +17,13 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
+import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
@@ -44,16 +46,18 @@ public class BoutiqueChildActivity extends AppCompatActivity {
     ArrayList<NewGoodsBean> mList;
     GoodsAdapter mAdapter ;
 
-    int catId;
+    //int catId;
     int pageId = 1;
+    BoutiqueBean bean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boutique_child);
         ButterKnife.bind(this);
         mContext = this;
-        catId = getIntent().getIntExtra(I.Boutique.CAT_ID, 0);
-        L.e(TAG,"catId====="+catId);
+        /*catId = getIntent().getIntExtra(I.Boutique.CAT_ID, 0);
+        L.e(TAG,"catId====="+catId);*/
+        bean = (BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
         initView();
         initData();
         setListener();
@@ -77,6 +81,8 @@ public class BoutiqueChildActivity extends AppCompatActivity {
         rl.setLayoutManager(mGridLayoutManager);
         rl.setAdapter(mAdapter);
         rl.addItemDecoration(new SpaceItemDecoration(20));
+
+        tvCommonTitle.setText(bean.getTitle());
     }
 
     private void initData() {
@@ -84,7 +90,7 @@ public class BoutiqueChildActivity extends AppCompatActivity {
     }
 
     private void showNewGoodAndBoutique(final int action) {
-        NetDao.downloadNewGoods(mContext, catId, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mContext, bean.getId(), pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 srl.setRefreshing(false);
@@ -160,5 +166,6 @@ public class BoutiqueChildActivity extends AppCompatActivity {
 
     @OnClick(R.id.backClickArea)
     public void onClick() {
+        MFGT.finish(mContext);
     }
 }

@@ -9,6 +9,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.activity.GoodDetailsActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
+import cn.ucai.fulicenter.bean.BoutiqueBean;
 
 
 public class MFGT {
@@ -41,10 +42,10 @@ public class MFGT {
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
     }
 
-    public static void gotoBoutiqueChildActivity(Context context, int catId){
+    public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean){
         Intent intent = new Intent();
         intent.setClass(context, BoutiqueChildActivity.class);
-        intent.putExtra(I.Boutique.CAT_ID,catId);
+        intent.putExtra(I.Boutique.CAT_ID,bean);
         startActivity(context,intent);
         /*context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
