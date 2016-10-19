@@ -7,18 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.holder.FooterViewHolder;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 /**
  * Created by ACherish on 2016/10/19.
@@ -33,6 +36,8 @@ public class BoutiqueAdapter extends Adapter {
     boolean isMore;
 
     String tvFooterText;
+
+    int catId;
 
     public BoutiqueAdapter(Context context, ArrayList<BoutiqueBean> list) {
         this.mContext = context;
@@ -82,6 +87,7 @@ public class BoutiqueAdapter extends Adapter {
             ((BoutiqueViewHolder) holder).tv.setText(boutiqueBean.getName());
             ((BoutiqueViewHolder) holder).tvDes.setText(boutiqueBean.getDescription());
             ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl());
+            catId = boutiqueBean.getId();
         }
     }
 
@@ -120,10 +126,17 @@ public class BoutiqueAdapter extends Adapter {
         TextView tv;
         @BindView(R.id.tv_desc)
         TextView tvDes;
+        @BindView(R.id.layout_item_boutique)
+        RelativeLayout layoutItemBoutique;
 
         BoutiqueViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.layout_item_boutique)
+        public void onItemClick(){
+            MFGT.gotoBoutiqueChildActivity(mContext,catId);
         }
     }
 }
