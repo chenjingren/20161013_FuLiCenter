@@ -28,7 +28,7 @@ public class BoutiqueAdapter extends Adapter {
 
     boolean isMore;
 
-    TextView tvFooterText;
+    String tvFooterText;
 
     public BoutiqueAdapter(Context context, ArrayList<BoutiqueBean> list) {
         this.mContext = context;
@@ -44,12 +44,13 @@ public class BoutiqueAdapter extends Adapter {
         isMore = more;
     }
 
-    public TextView getTvFooterText() {
+    public String getTvFooterText() {
         return tvFooterText;
     }
 
-    public void setTvFooterText(TextView tvFooterText) {
+    public void setTvFooterText(String tvFooterText) {
         this.tvFooterText = tvFooterText;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -68,7 +69,7 @@ public class BoutiqueAdapter extends Adapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FooterViewHolder) {
-            ((FooterViewHolder) holder).tvFooter.setText(getTvFooterText().toString());
+            ((FooterViewHolder) holder).tvFooter.setText(getTvFooterText());
         }
         if (holder instanceof BoutiqueViewHolder) {
             BoutiqueBean boutiqueBean = mList.get(position);
