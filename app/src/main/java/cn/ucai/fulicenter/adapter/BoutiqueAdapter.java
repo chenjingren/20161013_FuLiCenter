@@ -81,7 +81,7 @@ public class BoutiqueAdapter extends Adapter {
             ((BoutiqueViewHolder) holder).tvTitle.setText(boutiqueBean.getTitle());
             ((BoutiqueViewHolder) holder).tv.setText(boutiqueBean.getName());
             ((BoutiqueViewHolder) holder).tvDes.setText(boutiqueBean.getDescription());
-            ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl(),false);
+            ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl());
         }
     }
 
