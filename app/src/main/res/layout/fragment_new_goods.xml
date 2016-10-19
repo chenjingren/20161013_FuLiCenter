@@ -13,14 +13,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
-                android:id="@+id/tvRefresh"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/now_refresh"
-                android:textColor="#000"
-                android:textSize="20sp"
-                android:visibility="visible"/>
+            <include layout="@layout/tv_refresh"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rl"
