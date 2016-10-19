@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.MainActivity;
@@ -30,7 +29,7 @@ import cn.ucai.fulicenter.views.SpaceItemDecoration;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BoutiqueFragment extends Fragment {
+public class BoutiqueFragment extends BaseFragment {
 
     public static final String TAG = BoutiqueFragment.class.getName();
 
@@ -59,13 +58,15 @@ public class BoutiqueFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_boutique, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
-        initView();
+        super.onCreateView(inflater,container,savedInstanceState);
+        /*initView();
         initData();
-        setListener();
+        setListener();*/
         return layout;
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         srl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_yellow),
@@ -83,7 +84,8 @@ public class BoutiqueFragment extends Fragment {
         rl.addItemDecoration(new SpaceItemDecoration(10));
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showBoutique(I.ACTION_DOWNLOAD);
     }
 
@@ -125,8 +127,8 @@ public class BoutiqueFragment extends Fragment {
         });
     }
 
-
-    private void setListener() {
+    @Override
+    protected void setListener() {
         setPullDownloadListener();
         setPullUpListener();
     }
