@@ -87,7 +87,8 @@ public class BoutiqueAdapter extends Adapter {
             ((BoutiqueViewHolder) holder).tv.setText(boutiqueBean.getName());
             ((BoutiqueViewHolder) holder).tvDes.setText(boutiqueBean.getDescription());
             ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl());
-            catId = boutiqueBean.getId();
+            //catId = boutiqueBean.getId();
+            ((BoutiqueViewHolder) holder).layoutItemBoutique.setTag(boutiqueBean.getId());
         }
     }
 
@@ -136,6 +137,7 @@ public class BoutiqueAdapter extends Adapter {
 
         @OnClick(R.id.layout_item_boutique)
         public void onItemClick(){
+            catId = (int) layoutItemBoutique.getTag();
             MFGT.gotoBoutiqueChildActivity(mContext,catId);
         }
     }
