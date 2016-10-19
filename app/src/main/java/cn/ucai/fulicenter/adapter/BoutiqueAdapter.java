@@ -108,14 +108,4 @@ public class BoutiqueAdapter extends Adapter {
             ButterKnife.bind(this, view);
         }
     }
-
-    class FooterViewHolder extends RecyclerView.ViewHolder{
-        @BindView(R.id.tvFooter)
-        TextView tvFooter;
-
-        FooterViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 }

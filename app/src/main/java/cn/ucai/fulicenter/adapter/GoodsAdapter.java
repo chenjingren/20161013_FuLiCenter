@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.GoodDetailsActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.holder.FooterViewHolder;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -69,7 +70,7 @@ public class GoodsAdapter extends RecyclerView.Adapter{
         L.e(TAG,"onBindViewHolder position======="+position);
         if (getItemViewType(position)== I.TYPE_FOOTER){
             FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
-            footerViewHolder.mtvFooter.setText(getFooterText());
+            footerViewHolder.tvFooter.setText(getFooterText());
             return;
         }
         //L.e(TAG,"onBindViewHolder position======="+position);
@@ -135,11 +136,5 @@ public class GoodsAdapter extends RecyclerView.Adapter{
             //
         }
     }
-    class FooterViewHolder extends RecyclerView.ViewHolder{
-        TextView mtvFooter;
-        public FooterViewHolder(View itemView) {
-            super(itemView);
-            mtvFooter = (TextView) itemView.findViewById(R.id.tvFooter);
-        }
-    }
+
 }
