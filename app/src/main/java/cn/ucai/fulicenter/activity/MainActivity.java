@@ -15,10 +15,9 @@ import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static final String TAG = MainActivity.class.getName();
-
 
     RadioButton rb[];
     Fragment[] mFragments;
@@ -42,20 +41,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initView();
-        initFragment();
+        super.onCreate(savedInstanceState);
+        /*initView();
+        initFragment();*/
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         rb = new RadioButton[5];
         rb[0] = rbNewGood;
         rb[1] = rbBoutique;
         rb[2] = rbCategory;
         rb[3] = rbCart;
         rb[4] = rbPersonalCenter;
+    }
+
+    @Override
+    protected void initData() {
+        initFragment();
+    }
+
+    @Override
+    protected void setListener() {
+
     }
 
     private void initFragment() {

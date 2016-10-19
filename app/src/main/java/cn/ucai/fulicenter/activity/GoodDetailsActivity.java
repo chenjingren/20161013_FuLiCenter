@@ -21,7 +21,7 @@ import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
-public class GoodDetailsActivity extends AppCompatActivity {
+public class GoodDetailsActivity extends BaseActivity {
 
     @BindView(R.id.backClickArea)
     LinearLayout backClickArea;
@@ -48,7 +48,6 @@ public class GoodDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_good_details);
         ButterKnife.bind(this);
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
@@ -57,16 +56,19 @@ public class GoodDetailsActivity extends AppCompatActivity {
             finish();
         }
         mContext = this;
-        initView();
+        super.onCreate(savedInstanceState);
+        /*initView();
         initData();
-        setListener();
+        setListener();*/
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
 
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         NetDao.downloadGoodDetails(mContext, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
@@ -117,7 +119,8 @@ public class GoodDetailsActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void setListener() {
+    @Override
+    protected void setListener() {
 
     }
 
@@ -126,9 +129,4 @@ public class GoodDetailsActivity extends AppCompatActivity {
         MFGT.finish(mContext);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        MFGT.finish(mContext);
-    }
 }
