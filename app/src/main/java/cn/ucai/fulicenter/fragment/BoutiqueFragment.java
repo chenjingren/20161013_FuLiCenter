@@ -94,14 +94,13 @@ public class BoutiqueFragment extends Fragment {
                 srl.setRefreshing(false);
                 tvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(true);
+                mAdapter.setTvFooterText(String.valueOf(R.string.load_more));
                 if (result!=null && result.length>0){
                     ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
                     if (action== I.ACTION_DOWNLOAD|| action == I.ACTION_PULL_DOWN){
                         mAdapter.initList(list);
-                        mAdapter.setTvFooterText(String.valueOf(R.string.load_more));
                     }else {
                         mAdapter.addList(list);
-                        mAdapter.setTvFooterText(String.valueOf(R.string.load_more));
                     }
                     if (list.size()<I.PAGE_SIZE_DEFAULT){
                         mAdapter.setMore(false);
