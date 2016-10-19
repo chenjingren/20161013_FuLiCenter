@@ -27,7 +27,7 @@ import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
-public class BoutiqueChildActivity extends AppCompatActivity {
+public class BoutiqueChildActivity extends BaseActivity {
 
     public static final String TAG = BoutiqueChildActivity.class.getName();
 
@@ -51,19 +51,20 @@ public class BoutiqueChildActivity extends AppCompatActivity {
     BoutiqueBean bean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_boutique_child);
         ButterKnife.bind(this);
         mContext = this;
         /*catId = getIntent().getIntExtra(I.Boutique.CAT_ID, 0);
         L.e(TAG,"catId====="+catId);*/
         bean = (BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
-        initView();
+        super.onCreate(savedInstanceState);
+        /*initView();
         initData();
-        setListener();
+        setListener();*/
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         srl.setColorSchemeColors(
                 getResources().getColor(R.color.google_green),
                 getResources().getColor(R.color.google_yellow),
@@ -85,7 +86,8 @@ public class BoutiqueChildActivity extends AppCompatActivity {
         tvCommonTitle.setText(bean.getTitle());
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         showNewGoodAndBoutique(I.ACTION_DOWNLOAD);
     }
 
@@ -124,7 +126,8 @@ public class BoutiqueChildActivity extends AppCompatActivity {
         });
     }
 
-    private void setListener() {
+    @Override
+    protected void setListener() {
         setPullDownListener();
         setPullUpListener();
     }
