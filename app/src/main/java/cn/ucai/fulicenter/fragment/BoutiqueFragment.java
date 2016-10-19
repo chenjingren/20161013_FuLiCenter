@@ -75,12 +75,12 @@ public class BoutiqueFragment extends Fragment {
 
         mLayoutManager = new LinearLayoutManager(mContext);
         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mList = new ArrayList<>();
+        mList = new ArrayList<BoutiqueBean>();
         mAdapter = new BoutiqueAdapter(mContext,mList);
         rl.setLayoutManager(mLayoutManager);
         rl.setHasFixedSize(true);
         rl.setAdapter(mAdapter);
-        rl.addItemDecoration(new SpaceItemDecoration(20));
+        rl.addItemDecoration(new SpaceItemDecoration(10));
     }
 
     private void initData() {
@@ -94,7 +94,7 @@ public class BoutiqueFragment extends Fragment {
                 srl.setRefreshing(false);
                 tvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(true);
-                mAdapter.setTvFooterText(String.valueOf(R.string.load_more));
+                mAdapter.setTvFooterText(getResources().getString(R.string.load_more));
                 if (result!=null && result.length>0){
                     ArrayList<BoutiqueBean> list = ConvertUtils.array2List(result);
                     if (action== I.ACTION_DOWNLOAD|| action == I.ACTION_PULL_DOWN){
@@ -104,13 +104,13 @@ public class BoutiqueFragment extends Fragment {
                     }
                     if (list.size()<I.PAGE_SIZE_DEFAULT){
                         mAdapter.setMore(false);
-                        mAdapter.setTvFooterText(String.valueOf(R.string.no_more));
+                        mAdapter.setTvFooterText(getResources().getString(R.string.no_more));
                     }
                 }else {
                     srl.setRefreshing(false);
                     tvRefresh.setVisibility(View.GONE);
                     mAdapter.setMore(false);
-                    mAdapter.setTvFooterText(String.valueOf(R.string.no_more));
+                    mAdapter.setTvFooterText(getResources().getString(R.string.no_more));
                 }
             }
 

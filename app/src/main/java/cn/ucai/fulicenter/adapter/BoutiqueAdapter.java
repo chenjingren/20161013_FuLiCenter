@@ -18,11 +18,15 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.holder.FooterViewHolder;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 
 /**
  * Created by ACherish on 2016/10/19.
  */
 public class BoutiqueAdapter extends Adapter {
+
+    public static final String TAG = BoutiqueAdapter.class.getName();
+
     Context mContext;
     ArrayList<BoutiqueBean> mList;
 
@@ -32,8 +36,8 @@ public class BoutiqueAdapter extends Adapter {
 
     public BoutiqueAdapter(Context context, ArrayList<BoutiqueBean> list) {
         this.mContext = context;
-        mList = new ArrayList<>();
-        mList = list;
+        this.mList = new ArrayList<BoutiqueBean>();
+        this.mList.addAll(list);
     }
 
     public boolean isMore() {
@@ -57,17 +61,18 @@ public class BoutiqueAdapter extends Adapter {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder = null;
         if (viewType == I.TYPE_FOOTER) {
-            holder = new BoutiqueViewHolder(LayoutInflater.from(mContext)
-                    .inflate(R.layout.item_boutique, parent, false));
-        } else {
             holder = new FooterViewHolder(LayoutInflater.from(mContext)
                     .inflate(R.layout.item_footer, parent, false));
+        } else {
+            holder = new BoutiqueViewHolder(LayoutInflater.from(mContext)
+                    .inflate(R.layout.item_boutique, parent, false));
         }
         return holder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        L.e(TAG,"onBindViewHolder position======="+position);
         if (holder instanceof FooterViewHolder) {
             ((FooterViewHolder) holder).tvFooter.setText(getTvFooterText());
         }
@@ -76,18 +81,18 @@ public class BoutiqueAdapter extends Adapter {
             ((BoutiqueViewHolder) holder).tvTitle.setText(boutiqueBean.getTitle());
             ((BoutiqueViewHolder) holder).tv.setText(boutiqueBean.getName());
             ((BoutiqueViewHolder) holder).tvDes.setText(boutiqueBean.getDescription());
-            ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl());
+            ImageLoader.downloadImg(mContext,((BoutiqueViewHolder) holder).ivBoutique,boutiqueBean.getImageurl(),false);
         }
     }
 
     @Override
     public int getItemCount() {
-        return mList != null ? mList.size() + 1 : 1;
+        return mList!=null?mList.size()+1:1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (getItemCount() - 1 == position) {
+        if (position==getItemCount()-1) {
             return I.TYPE_FOOTER;
         }
         return I.TYPE_ITEM;

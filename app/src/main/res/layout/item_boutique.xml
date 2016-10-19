@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_boutique"
@@ -19,7 +19,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:textColor="@color/list_item_title"
             android:text="1234567"/>
@@ -30,9 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_title"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:ellipsize="end"
-            android:textSize="30sp"
+            android:textSize="18sp"
             android:textColor="#000"
             android:text="1234567"/>
 
@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_name"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:ellipsize="end"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="#000"
             android:maxLines="2"
             android:text="1234567"/>
