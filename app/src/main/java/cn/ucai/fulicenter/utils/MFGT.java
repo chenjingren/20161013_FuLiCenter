@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
+import java.util.ArrayList;
+
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
@@ -66,6 +68,18 @@ public class MFGT {
         Intent intent = new Intent();
         intent.setClass(context, CategoryChildActivity.class);
         intent.putExtra(I.CategoryChild.CAT_ID,catId);
+        startActivity(context,intent);
+        /*context.startActivity(intent);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
+    }
+
+    public static void gotoCategoryChildActivity(Context context, int catId,
+                                                 String groupName, ArrayList<CategoryChildBean> list){
+        Intent intent = new Intent();
+        intent.setClass(context, CategoryChildActivity.class);
+        intent.putExtra(I.CategoryChild.CAT_ID,catId);
+        intent.putExtra(I.CategoryGroup.NAME,groupName);
+        intent.putExtra(I.CategoryChild.ID,list);
         startActivity(context,intent);
         /*context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
