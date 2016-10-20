@@ -111,7 +111,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View v) {
                     String groupName = mGroupList.get(groupPosition).getName();
-                    ArrayList<CategoryChildBean> categoryChildList = mChildList.get(childPosition);
+                    ArrayList<CategoryChildBean> categoryChildList = mChildList.get(groupPosition);
 
                     MFGT.gotoCategoryChildActivity(mContext,child.getId(),groupName,categoryChildList);
                 }
