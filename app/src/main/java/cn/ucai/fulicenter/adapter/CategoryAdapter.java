@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.adapter;
 
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -54,7 +53,8 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public CategoryChildBean getChild(int groupPosition, int childPosition) {
-        return mChildList != null && mChildList.get(groupPosition) != null ?
+        return mChildList.get(groupPosition) != null &&
+                mChildList.get(groupPosition).get(childPosition) != null ?
                 mChildList.get(groupPosition).get(childPosition) : null;
     }
 
@@ -117,18 +117,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     public void initList(ArrayList<CategoryGroupBean> mGroupList,
                          ArrayList<ArrayList<CategoryChildBean>> mChildList) {
-        if (mGroupList!=null){
-            mGroupList.clear();
+        if (this.mGroupList!=null){
+            this.mGroupList.clear();
         }
-        mGroupList.addAll(mGroupList);
-        if (mChildList!=null){
-            mChildList.clear();
+        this.mGroupList.addAll(mGroupList);
+        if (this.mChildList!=null){
+            this.mChildList.clear();
         }
-        mChildList.addAll(mChildList);
+        this.mChildList.addAll(mChildList);
         notifyDataSetChanged();
     }
 
-    class GroupViewHolder extends RecyclerView.ViewHolder {
+    class GroupViewHolder {
         @BindView(R.id.iv_group_thumb)
         ImageView ivGroupThumb;
         @BindView(R.id.tv_group_name)
@@ -137,12 +137,11 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         ImageView ivIndicator;
 
         GroupViewHolder(View view) {
-            super(view);
             ButterKnife.bind(this, view);
         }
     }
 
-    class ChildViewHolder extends RecyclerView.ViewHolder{
+    class ChildViewHolder {
         @BindView(R.id.iv_category_child_thumb)
         ImageView ivCategoryChildThumb;
         @BindView(R.id.tv_category_child_name)
@@ -151,7 +150,6 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         RelativeLayout layoutCategoryChild;
 
         ChildViewHolder(View view) {
-            super(view);
             ButterKnife.bind(this, view);
         }
     }
