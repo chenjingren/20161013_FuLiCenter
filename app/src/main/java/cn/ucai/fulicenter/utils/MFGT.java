@@ -61,4 +61,13 @@ public class MFGT {
         /*context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
     }
+
+    public static void gotoCategoryChildActivity(Context context, int catId){
+        Intent intent = new Intent();
+        intent.setClass(context, CategoryChildActivity.class);
+        intent.putExtra(I.CategoryChild.CAT_ID,catId);
+        startActivity(context,intent);
+        /*context.startActivity(intent);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
+    }
 }
