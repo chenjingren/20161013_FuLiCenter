@@ -115,6 +115,19 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    public void initList(ArrayList<CategoryGroupBean> mGroupList,
+                         ArrayList<ArrayList<CategoryChildBean>> mChildList) {
+        if (mGroupList!=null){
+            mGroupList.clear();
+        }
+        mGroupList.addAll(mGroupList);
+        if (mChildList!=null){
+            mChildList.clear();
+        }
+        mChildList.addAll(mChildList);
+        notifyDataSetChanged();
+    }
+
     class GroupViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_group_thumb)
         ImageView ivGroupThumb;
