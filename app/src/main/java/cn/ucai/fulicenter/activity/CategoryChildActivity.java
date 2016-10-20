@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -176,20 +177,33 @@ public class CategoryChildActivity extends BaseActivity {
 
     @OnClick({R.id.btn_sort_price, R.id.btn_sort_addtime})
     public void onClick(View view) {
+        Drawable drawable;
         switch (view.getId()) {
             case R.id.btn_sort_price:
                 if (isSortByPriceAsc){
                     sortBy = I.SORT_BY_PRICE_ASC;
+                    drawable = getResources().getDrawable(R.mipmap.arrow_order_up);
+                    drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+                    btnSortPrice.setCompoundDrawables(null,null,drawable,null);
                 }else {
                     sortBy = I.SORT_BY_PRICE_DESC;
+                    drawable = getResources().getDrawable(R.mipmap.arrow_order_down);
+                    drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+                    btnSortPrice.setCompoundDrawables(null,null,drawable,null);
                 }
                 isSortByPriceAsc = !isSortByPriceAsc;
                 break;
             case R.id.btn_sort_addtime:
                 if (isSortByAddTimeAsc){
                     sortBy = I.SORT_BY_ADDTIME_ASC;
+                    drawable = getResources().getDrawable(R.mipmap.arrow_order_up);
+                    drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+                    btnSortAddtime.setCompoundDrawables(null,null,drawable,null);
                 }else {
                     sortBy = I.SORT_BY_ADDTIME_DESC;
+                    drawable = getResources().getDrawable(R.mipmap.arrow_order_down);
+                    drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+                    btnSortAddtime.setCompoundDrawables(null,null,drawable,null);
                 }
                 isSortByAddTimeAsc = !isSortByAddTimeAsc;
                 break;
