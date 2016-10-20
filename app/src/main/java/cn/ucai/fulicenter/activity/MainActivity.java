@@ -108,8 +108,8 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         setFragment();
-        setRadioButtonStatus();
-        currentIndex = index;
+        //setRadioButtonStatus();
+        //currentIndex = index;
     }
 
     private void setFragment() {
@@ -120,10 +120,12 @@ public class MainActivity extends BaseActivity {
                 ft.add(R.id.fragment_container,mFragments[index]);
             }
             ft.show(mFragments[index]).commit();
+            setRadioButtonStatus(index);
+            currentIndex = index;
         }
     }
 
-    private void setRadioButtonStatus() {
+    private void setRadioButtonStatus(int index) {
         L.e(TAG, "index===" + index);
         for (int i = 0; i < rb.length; i++) {
             if (index == i) {
