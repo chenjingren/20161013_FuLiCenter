@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
-import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.ConvertUtils;
@@ -29,8 +29,6 @@ public class CategoryChildActivity extends BaseActivity {
 
     public static final String TAG = CategoryChildActivity.class.getName();
 
-    @BindView(R.id.tv_common_title)
-    TextView tvCommonTitle;
     @BindView(R.id.tvRefresh)
     TextView tvRefresh;
     @BindView(R.id.rl)
@@ -46,19 +44,29 @@ public class CategoryChildActivity extends BaseActivity {
 
     CategoryChildActivity mContext;
 
-    int pageId=1;
+    int pageId = 1;
 
     int catId;
+    @BindView(R.id.btn_sort_price)
+    Button btnSortPrice;
+    @BindView(R.id.btn_sort_addtime)
+    Button btnSortAddtime;
+
+    boolean isSortByPriceAsc;
+    boolean isSortByAddTimeAsc;
+
+    int sortBy;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_category_child);
-        mContext = this;
         ButterKnife.bind(this);
+        mContext = this;
         super.onCreate(savedInstanceState);
-        catId = getIntent().getIntExtra(I.CategoryChild.CAT_ID,0);
+        catId = getIntent().getIntExtra(I.CategoryChild.CAT_ID, 0);
         //childBean = (CategoryChildBean) getIntent().getSerializableExtra(I.CategoryChild.CAT_ID);
         //L.e(TAG,childBean.toString());
-        L.e(TAG,"CATiD====="+catId);
+        L.e(TAG, "CATiD=====" + catId);
     }
 
     @Override
@@ -70,11 +78,11 @@ public class CategoryChildActivity extends BaseActivity {
                 getResources().getColor(R.color.google_yellow)
         );
 
-        mGridLayoutManager = new GridLayoutManager(mContext,I.COLUM_NUM);
+        mGridLayoutManager = new GridLayoutManager(mContext, I.COLUM_NUM);
         mGridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
         mList = new ArrayList<>();
-        mAdapter = new GoodsAdapter(mContext,mList);
+        mAdapter = new GoodsAdapter(mContext, mList);
 
         rl.setHasFixedSize(true);
         rl.setLayoutManager(mGridLayoutManager);
@@ -90,23 +98,23 @@ public class CategoryChildActivity extends BaseActivity {
     }
 
     private void showCategoryChild(final int action) {
-        NetDao.downloadCategoryChild(mContext,catId , pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadCategoryChild(mContext, catId, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 srl.setRefreshing(false);
                 tvRefresh.setVisibility(View.GONE);
                 mAdapter.setMore(true);
-                if (result!=null && result.length>0){
+                if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
-                    if (action == I.ACTION_DOWNLOAD || action ==  I.ACTION_PULL_DOWN){
+                    if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
                         mAdapter.initList(list);
-                    }else {
+                    } else {
                         mAdapter.addList(list);
                     }
-                    if (list.size()<I.PAGE_SIZE_DEFAULT){
+                    if (list.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
                     }
-                }else {
+                } else {
                     srl.setRefreshing(false);
                     tvRefresh.setVisibility(View.GONE);
                     mAdapter.setMore(false);
@@ -132,7 +140,7 @@ public class CategoryChildActivity extends BaseActivity {
             public void onRefresh() {
                 srl.setRefreshing(true);
                 tvRefresh.setVisibility(View.GONE);
-                pageId=1;
+                pageId = 1;
                 showCategoryChild(I.ACTION_PULL_DOWN);
             }
         });
@@ -145,8 +153,8 @@ public class CategoryChildActivity extends BaseActivity {
                 super.onScrollStateChanged(recyclerView, newState);
                 int lastPosition = mGridLayoutManager.findLastVisibleItemPosition();
                 if (newState == RecyclerView.SCROLL_STATE_IDLE &&
-                        mAdapter.getItemCount()-1== lastPosition &&
-                        mAdapter.isMore()){
+                        mAdapter.getItemCount() - 1 == lastPosition &&
+                        mAdapter.isMore()) {
                     pageId++;
                     showCategoryChild(I.ACTION_PULL_UP);
                 }
@@ -164,5 +172,28 @@ public class CategoryChildActivity extends BaseActivity {
     @OnClick(R.id.backClickArea)
     public void onClick() {
         MFGT.finish(mContext);
+    }
+
+    @OnClick({R.id.btn_sort_price, R.id.btn_sort_addtime})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_sort_price:
+                if (isSortByPriceAsc){
+                    sortBy = I.SORT_BY_PRICE_ASC;
+                }else {
+                    sortBy = I.SORT_BY_PRICE_DESC;
+                }
+                isSortByPriceAsc = !isSortByPriceAsc;
+                break;
+            case R.id.btn_sort_addtime:
+                if (isSortByAddTimeAsc){
+                    sortBy = I.SORT_BY_ADDTIME_ASC;
+                }else {
+                    sortBy = I.SORT_BY_ADDTIME_DESC;
+                }
+                isSortByAddTimeAsc = !isSortByAddTimeAsc;
+                break;
+        }
+        mAdapter.setSortBy(sortBy);
     }
 }
