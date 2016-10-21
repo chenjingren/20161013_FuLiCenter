@@ -93,9 +93,14 @@ public class MFGT {
         startActivity(context,intent);
     }
 
-    public static void gotoRegisterActivity(Context context){
+    public static void gotoRegisterActivity(Activity context){
         Intent intent = new Intent();
         intent.setClass(context, RegisterActivity.class);
-        startActivity(context,intent);
+        startActivityForResult(context,intent,I.REQUEST_CODE_REGISTER);
+    }
+
+    public static void startActivityForResult(Activity context,Intent intent,int requestCode){
+        context.startActivityForResult(intent,requestCode);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 }
