@@ -85,6 +85,7 @@
 
 
             <Button
+                android:id="@+id/btn_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dip"
@@ -92,13 +93,13 @@
                 android:layout_weight="1"
                 android:background="@drawable/tb_btn_login_orange_normal"
                 android:gravity="center"
-                android:onClick="login"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/login"
                 android:textColor="@android:color/white"
                 android:textSize="18sp" />
             <Button
+                android:id="@+id/btn_register"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
@@ -108,7 +109,6 @@
                 android:layout_weight="1"
                 android:background="@drawable/tb_regiser_bg"
                 android:gravity="center"
-                android:onClick="register"
                 android:paddingBottom="7dp"
                 android:paddingTop="7dp"
                 android:text="@string/register"

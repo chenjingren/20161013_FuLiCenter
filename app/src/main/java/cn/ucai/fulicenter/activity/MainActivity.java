@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,11 +11,13 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class MainActivity extends BaseActivity {
 
@@ -41,10 +44,13 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.rb_personal_center)
     RadioButton rbPersonalCenter;
 
+    Context mContext;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mContext = this;
         super.onCreate(savedInstanceState);
         /*initView();
         initFragment();*/
@@ -104,7 +110,11 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.rb_personal_center:
-                index = 4;
+                if (FuLiCenterApplication.getUserName()==null){
+                    MFGT.gotoLoginActivity(mContext);
+                }else {
+                    index = 4;
+                }
                 break;
         }
         setFragment();
