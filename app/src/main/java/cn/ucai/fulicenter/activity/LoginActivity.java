@@ -1,7 +1,9 @@
 package cn.ucai.fulicenter.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -12,13 +14,17 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.DisplayUtils;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 
 public class LoginActivity extends BaseActivity {
+
+    public static final String TAG = LoginActivity.class.getName();
 
     @BindView(R.id.backClickArea)
     LinearLayout backClickArea;
@@ -75,23 +81,48 @@ public class LoginActivity extends BaseActivity {
     private void login() {
         userName = username.getText().toString().trim();
         passWord = password.getText().toString().trim();
+        if (TextUtils.isEmpty(userName)){
+            CommonUtils.showLongToast(R.string.user_name_connot_be_empty);
+            username.requestFocus();
+            return;
+        }else  if (TextUtils.isEmpty(passWord)){
+            CommonUtils.showLongToast(R.string.password_connot_be_empty);
+            username.requestFocus();
+            return;
+        }
+        L.e(TAG,"userName==="+userName+"password===="+passWord);
+        final ProgressDialog pd = new ProgressDialog(mContext);
+        pd.setMessage(getResources().getString(R.string.logining));
+        pd.show();
         NetDao.reqLogin(mContext, userName, passWord, new OkHttpUtils.OnCompleteListener<Result>() {
             @Override
             public void onSuccess(Result result) {
+                L.e(TAG,"result===="+result);
+                pd.dismiss();
                 if (result == null){
                     CommonUtils.showLongToast(R.string.login_fail);
                 }else {
                     if (result.isRetMsg()){
-
+                        UserAvatar user = (UserAvatar) result.getRetData();
+                        L.e(TAG,"user===="+user);
+                        MFGT.finish(mContext);
                     }else {
-
+                        if (result.getRetCode() == I.MSG_LOGIN_UNKNOW_USER){
+                            CommonUtils.showLongToast(R.string.login_fail_unknow_username);
+                        }else if(result.getRetCode() == I.MSG_LOGIN_ERROR_PASSWORD){
+                            CommonUtils.showLongToast(R.string.login_fail_error_password);
+                        }else {
+                            CommonUtils.showLongToast(R.string.login_fail);
+                        }
                     }
                 }
             }
 
             @Override
             public void onError(String error) {
-
+                pd.dismiss();
+                CommonUtils.showLongToast(R.string.login_fail);
+                L.e(TAG,"error====="+error);
             }
         });
     }
