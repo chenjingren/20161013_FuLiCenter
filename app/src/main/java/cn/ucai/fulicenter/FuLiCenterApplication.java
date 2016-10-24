@@ -3,6 +3,8 @@ package cn.ucai.fulicenter;
 import android.app.Application;
 import android.content.Context;
 
+import cn.ucai.fulicenter.bean.UserAvatar;
+
 /**
  * Created by ACherish on 2016/10/17.
  */
@@ -12,6 +14,16 @@ public class FuLiCenterApplication extends Application{
     private static FuLiCenterApplication instance;
 
     private static  String userName;
+    private static UserAvatar userAvatar;
+
+    public static UserAvatar getUserAvatar() {
+        return userAvatar;
+    }
+
+    public static void setUserAvatar(UserAvatar userAvatar) {
+        FuLiCenterApplication.userAvatar = userAvatar;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();

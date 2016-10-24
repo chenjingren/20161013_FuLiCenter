@@ -11,10 +11,12 @@ import android.widget.LinearLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.DisplayUtils;
@@ -106,7 +108,15 @@ public class LoginActivity extends BaseActivity {
                     if (result.isRetMsg()){
                         UserAvatar user = (UserAvatar) result.getRetData();
                         L.e(TAG,"user===="+user);
-                        MFGT.finish(mContext);
+                        UserDao dao = new UserDao(mContext);
+                        boolean isSuccess = dao.saveUser(user);
+                        if (isSuccess){
+                            FuLiCenterApplication.setUserAvatar(user);
+                            MFGT.finish(mContext);
+                        }else {
+                            CommonUtils.showLongToast(R.string.user_database_error);
+                        }
+
                     }else {
                         if (result.getRetCode() == I.MSG_LOGIN_UNKNOW_USER){
                             CommonUtils.showLongToast(R.string.login_fail_unknow_username);

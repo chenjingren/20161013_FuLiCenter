@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 
@@ -14,10 +17,12 @@ public class SplashActivity extends Activity {
     private static final long sleepTime = 2000;
 
     private static final String TAG = SplashActivity.class.getName();
+    SplashActivity mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+        mContext = this;
     }
 
     @Override
@@ -47,6 +52,13 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
+                UserAvatar userAvatar = FuLiCenterApplication.getUserAvatar();
+                L.e(TAG,"FuliCenter.userAvatar===="+userAvatar);
+                if (userAvatar == null){
+                    UserDao dao = new UserDao(mContext);
+                    userAvatar = dao.getUser("a9527010");
+                    L.e(TAG,"DataBase.userAvatar===="+userAvatar);
+                }
                 MFGT.gotoMainActivity(SplashActivity.this);
                 //MFGT.finish(SplashActivity.this);
                 finish();
