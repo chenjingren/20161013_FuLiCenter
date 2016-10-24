@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
+import cn.ucai.fulicenter.fragment.PersonalCenterFragment;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 
@@ -28,6 +29,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment newGoodsFragment;
     BoutiqueFragment boutiqueFragment;
     CategoryFragment categoryFragment;
+    PersonalCenterFragment personalCenterFragment;
     int index;
     int currentIndex;
 
@@ -80,10 +82,13 @@ public class MainActivity extends BaseActivity {
         newGoodsFragment = new NewGoodsFragment();
         boutiqueFragment = new BoutiqueFragment();
         categoryFragment = new CategoryFragment();
+        personalCenterFragment = new PersonalCenterFragment();
         mFragments = new Fragment[5];
         mFragments[0] = newGoodsFragment;
         mFragments[1] = boutiqueFragment;
         mFragments[2] = categoryFragment;
+        mFragments[4] = personalCenterFragment;
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container,newGoodsFragment)
@@ -110,7 +115,7 @@ public class MainActivity extends BaseActivity {
                 index = 3;
                 break;
             case R.id.rb_personal_center:
-                if (FuLiCenterApplication.getUserName()==null){
+                if (FuLiCenterApplication.getUserAvatar()==null){
                     MFGT.gotoLoginActivity(mContext);
                 }else {
                     index = 4;
