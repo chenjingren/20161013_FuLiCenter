@@ -11,6 +11,7 @@ import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.SharePreferencesUtils;
 
 public class SplashActivity extends Activity {
 
@@ -54,10 +55,15 @@ public class SplashActivity extends Activity {
             public void run() {
                 UserAvatar userAvatar = FuLiCenterApplication.getUserAvatar();
                 L.e(TAG,"FuliCenter.userAvatar===="+userAvatar);
-                if (userAvatar == null){
+                String username = SharePreferencesUtils.getInstance(mContext).getUser();
+                L.e(TAG,"SharePreferences.username====="+username);
+                if (userAvatar == null && username !=null){
                     UserDao dao = new UserDao(mContext);
-                    userAvatar = dao.getUser("a9527010");
+                    userAvatar = dao.getUser(username);
                     L.e(TAG,"DataBase.userAvatar===="+userAvatar);
+                    if (userAvatar!=null){
+                        FuLiCenterApplication.setUserAvatar(userAvatar);
+                    }
                 }
                 MFGT.gotoMainActivity(SplashActivity.this);
                 //MFGT.finish(SplashActivity.this);

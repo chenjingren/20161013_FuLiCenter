@@ -24,6 +24,7 @@ import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.utils.ResultUtils;
+import cn.ucai.fulicenter.utils.SharePreferencesUtils;
 
 public class LoginActivity extends BaseActivity {
 
@@ -106,11 +107,14 @@ public class LoginActivity extends BaseActivity {
                     CommonUtils.showLongToast(R.string.login_fail);
                 }else {
                     if (result.isRetMsg()){
+
                         UserAvatar user = (UserAvatar) result.getRetData();
+
                         L.e(TAG,"user===="+user);
                         UserDao dao = new UserDao(mContext);
                         boolean isSuccess = dao.saveUser(user);
                         if (isSuccess){
+                            SharePreferencesUtils.getInstance(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUserAvatar(user);
                             MFGT.finish(mContext);
                         }else {
