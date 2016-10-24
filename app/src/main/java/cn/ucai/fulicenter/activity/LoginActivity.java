@@ -21,6 +21,7 @@ import cn.ucai.fulicenter.utils.DisplayUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.utils.ResultUtils;
 
 public class LoginActivity extends BaseActivity {
 
@@ -94,9 +95,10 @@ public class LoginActivity extends BaseActivity {
         final ProgressDialog pd = new ProgressDialog(mContext);
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
-        NetDao.reqLogin(mContext, userName, passWord, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.reqLogin(mContext, userName, passWord, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(String str) {
+                Result result = ResultUtils.getResultFromJson(str, UserAvatar.class);
                 L.e(TAG,"result===="+result);
                 pd.dismiss();
                 if (result == null){
