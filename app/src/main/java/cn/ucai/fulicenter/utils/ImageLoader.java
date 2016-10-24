@@ -15,6 +15,7 @@ import java.net.URLEncoder;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.UserAvatar;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -25,6 +26,8 @@ import okhttp3.Response;
  * Created by yao on 2016/5/18.
  */
 public class ImageLoader {
+    public static final String TAG = ImageLoader.class.getName();
+
     private static final String UTF_8 = "utf-8";
     private static final int DOWNLOAD_SUCCESS=0;
     private static final int DOWNLOAD_ERROR=1;
@@ -356,6 +359,24 @@ public class ImageLoader {
                 .defaultPicture(R.drawable.nopic)
                 .imageView(imageView)
                 .setDragging(isDragging)
+                .showImage(context);
+    }
+
+    public static String getAvatarUrl(UserAvatar userAvatar){
+        if (userAvatar !=null){
+            String url = I.DOWNLOAD_USER_AVATAR_URL + I.NAME_OR_HXID + "=" + userAvatar.getMuserName()
+                    +I.AND + I.AVATAR_TYPE + "=" + I.AVATAR_TYPE_USER_PATH
+                    + I.AND + I.AVATAR_SUFFIX +"=" +userAvatar.getMavatarSuffix()
+                    +I.AND + "width=200&height=200";
+            L.e(TAG,"downloadUserAvatarUrl====="+url);
+            return url;
+        }
+       return null;
+    }
+    public static void setUserAvatar(String url,Context context,ImageView ivAvatar){
+        ImageLoader.build(url)
+                .defaultPicture(R.drawable.contactlogo)
+                .imageView(ivAvatar)
                 .showImage(context);
     }
 }

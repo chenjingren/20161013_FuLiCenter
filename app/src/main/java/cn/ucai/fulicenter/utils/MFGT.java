@@ -87,10 +87,10 @@ public class MFGT {
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);*/
     }
 
-    public static void gotoLoginActivity(Context context){
+    public static void gotoLoginActivity(Activity context){
         Intent intent = new Intent();
         intent.setClass(context, LoginActivity.class);
-        startActivity(context,intent);
+        startActivityForResult(context,intent,I.REQUEST_CODE_REGISTER);
     }
 
     public static void gotoRegisterActivity(Activity context){

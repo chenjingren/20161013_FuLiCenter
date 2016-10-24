@@ -51,6 +51,8 @@ public interface I {
     int CATEGORY_GOOD=1;
     int CAT_ID=0;
     int REQUEST_CODE_REGISTER = 101;
+    int REQUEST_CODE_LOGIN = 102;
+    String AVATAR_SUFFIX = "m_avatar_suffix";
 
     interface Goods {
         String KEY_RESULT = "result";
@@ -417,4 +419,7 @@ public interface I {
     String DOWNLOAD_IMG_URL= I.SERVER_ROOT+
             REQUEST_DOWNLOAD_IMAGE+I.QUESTION+ IMAGE_URL+"=";
 
+    /** 下载用户头像的接口*/
+    String DOWNLOAD_USER_AVATAR_URL= I.SERVER_ROOT+
+            REQUEST_DOWNLOAD_AVATAR+I.QUESTION;
 }
