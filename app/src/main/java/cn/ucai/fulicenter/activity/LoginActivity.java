@@ -100,7 +100,6 @@ public class LoginActivity extends BaseActivity {
             public void onSuccess(String str) {
                 Result result = ResultUtils.getResultFromJson(str, UserAvatar.class);
                 L.e(TAG,"result===="+result);
-                pd.dismiss();
                 if (result == null){
                     CommonUtils.showLongToast(R.string.login_fail);
                 }else {
@@ -118,6 +117,7 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 }
+                pd.dismiss();
             }
 
             @Override
