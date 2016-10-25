@@ -12,8 +12,10 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.utils.DisplayUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.SharePreferencesUtils;
 
 public class UserProfileActivity extends BaseActivity {
 
@@ -28,6 +30,7 @@ public class UserProfileActivity extends BaseActivity {
     @BindView(R.id.tv_user_nick)
     TextView tvUserNick;
 
+    UserAvatar userAvatar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_use_profile);
@@ -38,16 +41,20 @@ public class UserProfileActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        tvCommonTitle.setText("个人资料");
+        DisplayUtils.initBackWithTitle(mContext, "个人资料");
     }
 
     @Override
     protected void initData() {
-        UserAvatar userAvatar = FuLiCenterApplication.getUserAvatar();
-        tvUserName.setText(userAvatar.getMuserName());
-        tvUserNick.setText(userAvatar.getMuserNick());
-        ImageLoader.setUserAvatar(
-                ImageLoader.getAvatarUrl(userAvatar),mContext,ivUserAvatar);
+        userAvatar = FuLiCenterApplication.getUserAvatar();
+        if (userAvatar!=null){
+            tvUserName.setText(userAvatar.getMuserName());
+            tvUserNick.setText(userAvatar.getMuserNick());
+            ImageLoader.setUserAvatar(
+                    ImageLoader.getAvatarUrl(userAvatar), mContext, ivUserAvatar);
+        }else {
+
+        }
     }
 
     @Override
@@ -55,20 +62,24 @@ public class UserProfileActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.backClickArea,R.id.iv_jt1, R.id.iv_jt2, R.id.iv_jt3, R.id.btn_exit_login})
+    @OnClick({R.id.layout_user_avatar, R.id.layout_user_name, R.id.layout_user_nick})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.backClickArea:
-                MFGT.finish(mContext);
+            case R.id.layout_user_avatar:
                 break;
-            case R.id.iv_jt1:
+            case R.id.layout_user_name:
                 break;
-            case R.id.iv_jt2:
+            case R.id.layout_user_nick:
                 break;
-            case R.id.iv_jt3:
-                break;
-            case R.id.btn_exit_login:
-                break;
+        }
+    }
+
+    @OnClick(R.id.btn_exit_login)
+    public void onClick() {
+        if (userAvatar!=null){
+            SharePreferencesUtils.getInstance(mContext).removeUser();
+            FuLiCenterApplication.setUserAvatar(null);
+            MFGT.gotoLoginActivity(mContext);
         }
     }
 }

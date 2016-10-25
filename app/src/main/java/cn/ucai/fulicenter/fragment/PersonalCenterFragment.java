@@ -34,6 +34,8 @@ public class PersonalCenterFragment extends BaseFragment {
 
     MainActivity mContext;
 
+    UserAvatar userAvatar;
+
     public PersonalCenterFragment() {
         // Required empty public constructor
     }
@@ -56,7 +58,7 @@ public class PersonalCenterFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        UserAvatar userAvatar = FuLiCenterApplication.getUserAvatar();
+        userAvatar = FuLiCenterApplication.getUserAvatar();
         if (userAvatar == null){
             MFGT.gotoLoginActivity(mContext);
         }else {
@@ -73,5 +75,15 @@ public class PersonalCenterFragment extends BaseFragment {
     @OnClick(R.id.tv_center_settings)
     public void onClick() {
        MFGT.gotoUserProfileActivity(mContext);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        userAvatar = FuLiCenterApplication.getUserAvatar();
+        if (userAvatar != null){
+            ImageLoader.setUserAvatar(ImageLoader.getAvatarUrl(userAvatar),mContext,ivUserAvatar);
+            tvUserName.setText(userAvatar.getMuserNick());
+        }
     }
 }
