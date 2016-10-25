@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.MainActivity;
+import cn.ucai.fulicenter.activity.UserProfileActivity;
 import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -70,5 +72,6 @@ public class PersonalCenterFragment extends BaseFragment {
 
     @OnClick(R.id.tv_center_settings)
     public void onClick() {
+        startActivity(new Intent(mContext, UserProfileActivity.class));
     }
 }
