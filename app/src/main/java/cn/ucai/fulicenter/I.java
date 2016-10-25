@@ -53,6 +53,7 @@ public interface I {
     int REQUEST_CODE_REGISTER = 101;
     int REQUEST_CODE_LOGIN = 102;
     String AVATAR_SUFFIX = "m_avatar_suffix";
+    int REQUEST_CODE_UPDATE_NICK = 103;
 
     interface Goods {
         String KEY_RESULT = "result";

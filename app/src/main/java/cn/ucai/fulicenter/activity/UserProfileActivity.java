@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,8 +11,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.DisplayUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -47,13 +50,10 @@ public class UserProfileActivity extends BaseActivity {
     @Override
     protected void initData() {
         userAvatar = FuLiCenterApplication.getUserAvatar();
-        if (userAvatar!=null){
-            tvUserName.setText(userAvatar.getMuserName());
-            tvUserNick.setText(userAvatar.getMuserNick());
-            ImageLoader.setUserAvatar(
-                    ImageLoader.getAvatarUrl(userAvatar), mContext, ivUserAvatar);
+        if (userAvatar==null){
+            finish();
         }else {
-
+           showUserProfile();
         }
     }
 
@@ -68,8 +68,10 @@ public class UserProfileActivity extends BaseActivity {
             case R.id.layout_user_avatar:
                 break;
             case R.id.layout_user_name:
+                CommonUtils.showLongToast("用户名不能修改");
                 break;
             case R.id.layout_user_nick:
+                MFGT.gotoUpdateNickActivity(mContext);
                 break;
         }
     }
@@ -81,5 +83,30 @@ public class UserProfileActivity extends BaseActivity {
             FuLiCenterApplication.setUserAvatar(null);
             MFGT.gotoLoginActivity(mContext);
         }
+        finish();
+    }
+
+    private void showUserProfile(){
+        userAvatar = FuLiCenterApplication.getUserAvatar();
+        if (userAvatar!=null){
+            tvUserName.setText(userAvatar.getMuserName());
+            tvUserNick.setText(userAvatar.getMuserNick());
+            ImageLoader.setUserAvatar(
+                    ImageLoader.getAvatarUrl(userAvatar), mContext, ivUserAvatar);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == I.REQUEST_CODE_UPDATE_NICK && resultCode == RESULT_OK){
+            CommonUtils.showLongToast(R.string.update_user_nick_success);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showUserProfile();
     }
 }

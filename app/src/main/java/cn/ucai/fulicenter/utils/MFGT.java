@@ -14,6 +14,7 @@ import cn.ucai.fulicenter.activity.GoodDetailsActivity;
 import cn.ucai.fulicenter.activity.LoginActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.activity.RegisterActivity;
+import cn.ucai.fulicenter.activity.UpdateNickActivity;
 import cn.ucai.fulicenter.activity.UserProfileActivity;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
@@ -107,5 +108,11 @@ public class MFGT {
 
     public static void gotoUserProfileActivity(Activity context){
         startActivity(context, UserProfileActivity.class);
+    }
+
+    public static void gotoUpdateNickActivity(Activity context){
+        Intent intent = new Intent();
+        intent.setClass(context, UpdateNickActivity.class);
+        startActivityForResult(context,intent,I.REQUEST_CODE_UPDATE_NICK);
     }
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_gray_light"
+    tools:context="cn.ucai.fulicenter.activity.UpdateNickActivity">
+    <include layout="@layout/common_head_title_white" />
+
+    <EditText
+        android:id="@+id/et_user_nick"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:lines="@null"/>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        android:text="保存修改"
+        android:textSize="20sp"
+        android:background="@color/main_orange"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>
