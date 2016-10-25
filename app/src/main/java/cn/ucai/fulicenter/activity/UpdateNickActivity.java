@@ -42,6 +42,7 @@ public class UpdateNickActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_update_nick);
         ButterKnife.bind(this);
+        mContext =this;
         super.onCreate(savedInstanceState);
     }
 

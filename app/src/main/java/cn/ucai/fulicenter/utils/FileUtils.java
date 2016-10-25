@@ -1,7 +1,9 @@
 package cn.ucai.fulicenter.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
+import android.provider.ContactsContract;
 
 import java.io.File;
 
@@ -30,5 +32,16 @@ public class FileUtils {
 		dir=getDir(context, newImgName);
 		File newFile=new File(dir);
 		oldFile.renameTo(newFile);
+	}
+
+	public static File getAvatarPath(Activity context, String avatarType, String fileName) {
+		File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+//        File dir =Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+		dir = new File(dir, avatarType);
+		if (!dir.exists()) {
+			dir.mkdirs();
+		}
+		File file = new File(dir, fileName);
+		return file;
 	}
 }
