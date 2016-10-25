@@ -72,6 +72,6 @@ public class PersonalCenterFragment extends BaseFragment {
 
     @OnClick(R.id.tv_center_settings)
     public void onClick() {
-        startActivity(new Intent(mContext, UserProfileActivity.class));
+       MFGT.gotoUserProfileActivity(mContext);
     }
 }
