@@ -10,6 +10,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.activity.CategoryChildActivity;
+import cn.ucai.fulicenter.activity.CollectsActivity;
 import cn.ucai.fulicenter.activity.GoodDetailsActivity;
 import cn.ucai.fulicenter.activity.LoginActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
@@ -114,5 +115,9 @@ public class MFGT {
         Intent intent = new Intent();
         intent.setClass(context, UpdateNickActivity.class);
         startActivityForResult(context,intent,I.REQUEST_CODE_UPDATE_NICK);
+    }
+
+    public static void gotoCollectsActivity(Activity context){
+        startActivity(context, CollectsActivity.class);
     }
 }

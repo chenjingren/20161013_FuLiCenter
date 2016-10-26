@@ -120,7 +120,7 @@ public class PersonalCenterFragment extends BaseFragment {
 
             @Override
             public void onError(String error) {
-                L.e(TAG,"syncUserInfo.error====="+error);
+                L.e(TAG, "syncUserInfo.error=====" + error);
             }
         });
     }
@@ -129,10 +129,10 @@ public class PersonalCenterFragment extends BaseFragment {
         NetDao.reqFindUserCollectCounts(mContext, userAvatar.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
             @Override
             public void onSuccess(MessageBean mes) {
-                if (mes!=null && mes.isSuccess()) {
-                    L.e(TAG,"count===="+mes.getMsg());
+                if (mes != null && mes.isSuccess()) {
+                    L.e(TAG, "count====" + mes.getMsg());
                     tvCollectCount.setText(mes.getMsg());
-                }else {
+                } else {
                     tvCollectCount.setText(String.valueOf(0));
                 }
             }
@@ -140,8 +140,13 @@ public class PersonalCenterFragment extends BaseFragment {
             @Override
             public void onError(String error) {
                 tvCollectCount.setText(String.valueOf(0));
-                L.e(TAG,"showCollectCounts.error====="+error);
+                L.e(TAG, "showCollectCounts.error=====" + error);
             }
         });
+    }
+
+    @OnClick(R.id.layout_center_collect)
+    public void gotoCollect() {
+        MFGT.gotoCollectsActivity(mContext);
     }
 }
