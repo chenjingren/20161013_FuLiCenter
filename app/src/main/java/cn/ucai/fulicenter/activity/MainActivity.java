@@ -165,7 +165,7 @@ public class MainActivity extends BaseActivity {
         super.onResume();
         L.e(TAG,"onResume( )......");
         if (index == 4 && FuLiCenterApplication.getUserAvatar()!=null){
-            index =0;
+            index =4;
         }
         setFragment();
     }

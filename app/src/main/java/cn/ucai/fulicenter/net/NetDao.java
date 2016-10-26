@@ -10,6 +10,7 @@ import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.utils.MD5;
@@ -111,6 +112,24 @@ public class NetDao {
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
+                .execute(listener);
+    }
+
+    public static void reqFindUserByUsername(Context context,String userName,
+                                OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME,userName)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    public static void reqFindUserCollectCounts(Context context,String userName,
+                                             OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME,userName)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 }

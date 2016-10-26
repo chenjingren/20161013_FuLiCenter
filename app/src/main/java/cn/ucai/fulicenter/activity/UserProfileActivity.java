@@ -14,10 +14,12 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserAvatar;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.DisplayUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.utils.SharePreferencesUtils;
 
 public class UserProfileActivity extends BaseActivity {
