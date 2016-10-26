@@ -11,13 +11,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CollectBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.bean.UserAvatar;
 import cn.ucai.fulicenter.holder.FooterViewHolder;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.OkHttpUtils;
 
 /**
  * Created by ACherish on 2016/10/17.
@@ -32,6 +37,8 @@ public class CollectsAdapter extends RecyclerView.Adapter{
     boolean isMore;
 
     String tvFooter;
+
+    UserAvatar userAvatar;
     
     public CollectsAdapter(Context mContext, ArrayList<CollectBean> mNewGoodsList) {
         this.mContext = mContext;
@@ -74,7 +81,7 @@ public class CollectsAdapter extends RecyclerView.Adapter{
             return;
         }
         //L.e(TAG,"onBindViewHolder position======="+position);
-        CollectBean goods = mNewGoodsList.get(position);
+        final CollectBean goods = mNewGoodsList.get(position);
         CollectViewHolder goodsViewHolder = (CollectViewHolder) holder;
         goodsViewHolder.tvGoodsName.setText(goods.getGoodsName());
         ImageLoader.downloadImg(mContext,goodsViewHolder.ivGoodsThumb,goods.getGoodsThumb());
@@ -86,6 +93,29 @@ public class CollectsAdapter extends RecyclerView.Adapter{
                 /*mContext.startActivity(new Intent(mContext, GoodDetailsActivity.class)
                         .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));*/
                 MFGT.gotoGoodDetailsActivity(mContext,goodsId);
+            }
+        });
+
+        goodsViewHolder.ivDeleteCollect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userAvatar = FuLiCenterApplication.getUserAvatar();
+                if (userAvatar!=null){
+                    NetDao.reqDeleteCollect(mContext, goods.getGoodsId(), userAvatar.getMuserName(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                        @Override
+                        public void onSuccess(MessageBean result) {
+                            if (result!=null && result.isSuccess()){
+                                mNewGoodsList.remove(goods);
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            L.e(TAG,"deleteCollect.error===="+error);
+                        }
+                    });
+                }
+
             }
         });
     }
@@ -124,13 +154,13 @@ public class CollectsAdapter extends RecyclerView.Adapter{
         View layoutItem;
         ImageView ivGoodsThumb;
         TextView tvGoodsName;
-        ImageView tvGoodsPrice;
+        ImageView ivDeleteCollect;
         public CollectViewHolder(View itemView) {
             super(itemView);
             layoutItem = itemView.findViewById(R.id.layout_collects);
             ivGoodsThumb = (ImageView) itemView.findViewById(R.id.ivGoodsThumb);
             tvGoodsName = (TextView) itemView.findViewById(R.id.tvGoodsName);
-            tvGoodsPrice = (ImageView) itemView.findViewById(R.id.iv_collect_del);
+            ivDeleteCollect = (ImageView) itemView.findViewById(R.id.iv_collect_del);
             //设置列表项单击事件监听
             //
         }

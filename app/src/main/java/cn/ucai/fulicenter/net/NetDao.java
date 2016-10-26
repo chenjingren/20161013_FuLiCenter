@@ -143,4 +143,13 @@ public class NetDao {
                 .targetClass(CollectBean[].class)
                 .execute(listener);
     }
+
+    public static void reqDeleteCollect(Context context,int goodsId,String username,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_COLLECT)
+                .addParam(I.Collect.GOODS_ID,String.valueOf(goodsId))
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 }
