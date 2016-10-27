@@ -1,12 +1,14 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -78,7 +80,7 @@ public class CartAdapter extends Adapter {
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
         L.e(TAG, "onBindViewHolder position=======" + position);
         if (holder instanceof FooterViewHolder) {
             ((FooterViewHolder) holder).tvFooter.setText(getTvFooterText());
@@ -92,6 +94,13 @@ public class CartAdapter extends Adapter {
                 ((CartViewHolder) holder).tvGoodsPrice.setText(goods.getCurrencyPrice());
             }
             ((CartViewHolder) holder).tvGoodsCount.setText(String.valueOf(cartBean.getCount()));
+            ((CartViewHolder) holder).cbCart.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    ((CartViewHolder) holder).cbCart.setChecked(isChecked);
+                    mContext.sendBroadcast(new Intent(I.BRAODCASE_UPDATE_GOODS_PRICE));
+                }
+            });
         }
     }
 

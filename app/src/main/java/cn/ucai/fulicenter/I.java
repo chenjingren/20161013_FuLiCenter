@@ -1,6 +1,8 @@
 package cn.ucai.fulicenter;
 
 
+import android.content.Context;
+
 public interface I {
     String SERVER_ROOT = "http://101.251.196.90:8000/FuLiCenterServerV2.0/";
     /** 下拉刷新*/
@@ -55,6 +57,7 @@ public interface I {
     String AVATAR_SUFFIX = "m_avatar_suffix";
     int REQUEST_CODE_UPDATE_NICK = 103;
     int REQUEST_CODE_LOGIN_FROM_CART = 104;
+    String BRAODCASE_UPDATE_GOODS_PRICE = "update goods price";
 
     interface Goods {
         String KEY_RESULT = "result";
