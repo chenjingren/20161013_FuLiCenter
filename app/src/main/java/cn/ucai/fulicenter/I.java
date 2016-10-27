@@ -58,6 +58,7 @@ public interface I {
     int REQUEST_CODE_UPDATE_NICK = 103;
     int REQUEST_CODE_LOGIN_FROM_CART = 104;
     String BRAODCASE_UPDATE_GOODS_PRICE = "update goods price";
+    int IS_GOODS_CHECKED = 0;
 
     interface Goods {
         String KEY_RESULT = "result";

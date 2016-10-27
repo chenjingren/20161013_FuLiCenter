@@ -179,4 +179,22 @@ public class NetDao {
                 .targetClass(CartBean[].class)
                 .execute(listener);
     }
+
+    public static void updateGoodsCount(Context context,int cartId,int count,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_CART)
+                .addParam(I.Cart.GOODS_ID,String.valueOf(cartId))
+                .addParam(I.Cart.COUNT,String.valueOf(count))
+                .addParam(I.Cart.IS_CHECKED,String.valueOf(I.IS_GOODS_CHECKED))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void delGoodsCount(Context context,int cartId,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_DELETE_CART)
+                .addParam(I.Cart.GOODS_ID,String.valueOf(cartId))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 }

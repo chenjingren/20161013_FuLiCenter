@@ -17,13 +17,17 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.holder.FooterViewHolder;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.OkHttpUtils;
 
 /**
  * Created by ACherish on 2016/10/19.
@@ -102,6 +106,8 @@ public class CartAdapter extends Adapter {
                     mContext.sendBroadcast(new Intent(I.BRAODCASE_UPDATE_GOODS_PRICE));
                 }
             });
+
+            ((CartViewHolder) holder).layoutItemCart.setTag(position);
         }
     }
 
@@ -132,31 +138,6 @@ public class CartAdapter extends Adapter {
         notifyDataSetChanged();
     }
 
-   /* class CartViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_boutique)
-        ImageView ivBoutique;
-        @BindView(R.id.tv_title)
-        TextView tvTitle;
-        @BindView(R.id.tv_name)
-        TextView tv;
-        @BindView(R.id.tv_desc)
-        TextView tvDes;
-        @BindView(R.id.layout_item_boutique)
-        RelativeLayout layoutItemBoutique;
-
-        CartViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-
-       *//* @OnClick(R.id.layout_item_boutique)
-        public void onItemClick(){
-            //catId = (int) layoutItemBoutique.getTag();
-            bean = (CartBean) layoutItemBoutique.getTag();
-            MFGT.gotoBoutiqueChildActivity(mContext,bean);
-        }*//*
-    }*/
-
     class CartViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cb_cart)
         CheckBox cbCart;
@@ -178,6 +159,64 @@ public class CartAdapter extends Adapter {
         CartViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.iv_add_goods)
+        public void addGoods(){
+            final int position = (int) layoutItemCart.getTag();
+            CartBean cartBean = mList.get(position);
+            NetDao.updateGoodsCount(mContext, cartBean.getId(), cartBean.getCount() + 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result!=null && result.isSuccess()){
+                        mList.get(position).setCount(mList.get(position).getCount()+1);
+                        mContext.sendBroadcast(new Intent(I.BRAODCASE_UPDATE_GOODS_PRICE));
+                        tvGoodsCount.setText(String.valueOf(mList.get(position).getCount()));
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            });
+        }
+
+        @OnClick(R.id.iv_del_goods)
+        public void delGoods(){
+            final int position = (int) layoutItemCart.getTag();
+            CartBean cartBean = mList.get(position);
+            if (cartBean.getCount()>1){
+                NetDao.updateGoodsCount(mContext, cartBean.getId(), cartBean.getCount() - 1, new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result!=null && result.isSuccess()){
+                            mList.get(position).setCount(mList.get(position).getCount()-1);
+                            mContext.sendBroadcast(new Intent(I.BRAODCASE_UPDATE_GOODS_PRICE));
+                            tvGoodsCount.setText(String.valueOf(mList.get(position).getCount()));
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+            }else {
+                NetDao.delGoodsCount(mContext, cartBean.getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result!=null && result.isSuccess()){
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+            }
         }
     }
 }
