@@ -91,7 +91,7 @@ public class CartAdapter extends Adapter {
                 ((CartViewHolder) holder).tvGoodsName.setText(goods.getGoodsName());
                 ((CartViewHolder) holder).tvGoodsPrice.setText(goods.getCurrencyPrice());
             }
-            ((CartViewHolder) holder).tvGoodsCount.setText(cartBean.getCount());
+            ((CartViewHolder) holder).tvGoodsCount.setText(String.valueOf(cartBean.getCount()));
         }
     }
 

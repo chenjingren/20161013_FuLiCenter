@@ -174,7 +174,7 @@ public class NetDao {
 
     public static void downloadCartGoods(Context context,String username,OkHttpUtils.OnCompleteListener<CartBean[]> listener){
         OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
-        utils.setRequestUrl(I.REQUEST_ADD_COLLECT)
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
                 .addParam(I.Cart.USER_NAME,username)
                 .targetClass(CartBean[].class)
                 .execute(listener);
