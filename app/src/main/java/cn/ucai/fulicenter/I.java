@@ -54,6 +54,7 @@ public interface I {
     int REQUEST_CODE_LOGIN = 102;
     String AVATAR_SUFFIX = "m_avatar_suffix";
     int REQUEST_CODE_UPDATE_NICK = 103;
+    int REQUEST_CODE_LOGIN_FROM_CART = 104;
 
     interface Goods {
         String KEY_RESULT = "result";

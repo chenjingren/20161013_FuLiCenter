@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CartFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.fragment.PersonalCenterFragment;
@@ -32,6 +34,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment newGoodsFragment;
     BoutiqueFragment boutiqueFragment;
     CategoryFragment categoryFragment;
+    CartFragment cartFragment;
     PersonalCenterFragment personalCenterFragment;
     int index;
     int currentIndex;
@@ -85,20 +88,22 @@ public class MainActivity extends BaseActivity {
         newGoodsFragment = new NewGoodsFragment();
         boutiqueFragment = new BoutiqueFragment();
         categoryFragment = new CategoryFragment();
+        cartFragment = new CartFragment();
         personalCenterFragment = new PersonalCenterFragment();
         mFragments = new Fragment[5];
         mFragments[0] = newGoodsFragment;
         mFragments[1] = boutiqueFragment;
         mFragments[2] = categoryFragment;
+        mFragments[3] = cartFragment;
         mFragments[4] = personalCenterFragment;
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_container,newGoodsFragment)
-                .add(R.id.fragment_container,boutiqueFragment)
+               /* .add(R.id.fragment_container,boutiqueFragment)
                 .add(R.id.fragment_container,categoryFragment)
                 .hide(categoryFragment)
-                .hide(boutiqueFragment)
+                .hide(boutiqueFragment)*/
                 .show(newGoodsFragment)
                 .commit();
     }
@@ -115,7 +120,11 @@ public class MainActivity extends BaseActivity {
                 index = 2;
                 break;
             case R.id.rb_cart:
-                index = 3;
+                if (FuLiCenterApplication.getUserAvatar()==null){
+                    MFGT.gotoLoginActivityFromCart(mContext);
+                }else {
+                    index = 3;
+                }
                 break;
             case R.id.rb_personal_center:
                 if (FuLiCenterApplication.getUserAvatar()==null){
@@ -174,8 +183,13 @@ public class MainActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         L.e(TAG,"onActivityResult.requestCode======"+requestCode);
-        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUserAvatar()!=null){
-            index = 4;
+        if (FuLiCenterApplication.getUserAvatar()!=null){
+            if (requestCode == I.REQUEST_CODE_LOGIN){
+                index = 4;
+            }
+            if (requestCode == I.REQUEST_CODE_LOGIN_FROM_CART){
+                index = 3;
+            }
         }
     }
 }
