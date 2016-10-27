@@ -18,7 +18,9 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
+import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.holder.FooterViewHolder;
+import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
 
 /**
@@ -82,14 +84,14 @@ public class CartAdapter extends Adapter {
             ((FooterViewHolder) holder).tvFooter.setText(getTvFooterText());
         }
         if (holder instanceof CartViewHolder) {
-            CartBean CartBean = mList.get(position);
-           /* ((CartViewHolder) holder).tvTitle.setText(CartBean.getTitle());
-            ((CartViewHolder) holder).tv.setText(CartBean.getName());
-            ((CartViewHolder) holder).tvDes.setText(CartBean.getDescription());
-            ImageLoader.downloadImg(mContext,((CartViewHolder) holder).ivBoutique,CartBean.getImageurl());
-            //catId = CartBean.getId();
-            //((CartViewHolder) holder).layoutItemBoutique.setTag(CartBean.getId());
-            ((CartViewHolder) holder).layoutItemBoutique.setTag(CartBean);*/
+            CartBean cartBean = mList.get(position);
+            GoodsDetailsBean goods = cartBean.getGoods();
+            if (goods!=null){
+                ImageLoader.downloadImg(mContext,((CartViewHolder) holder).ivGoodsThumb,goods.getGoodsThumb());
+                ((CartViewHolder) holder).tvGoodsName.setText(goods.getGoodsName());
+                ((CartViewHolder) holder).tvGoodsPrice.setText(goods.getCurrencyPrice());
+            }
+            ((CartViewHolder) holder).tvGoodsCount.setText(cartBean.getCount());
         }
     }
 
