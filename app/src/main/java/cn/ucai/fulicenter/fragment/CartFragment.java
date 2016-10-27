@@ -130,7 +130,9 @@ public class CartFragment extends BaseFragment {
                         setShowView(true);
                         ArrayList<CartBean> list = ConvertUtils.array2List(result);
                         if (action == I.ACTION_DOWNLOAD || action == I.ACTION_PULL_DOWN) {
-                            mAdapter.initList(list);
+                            mList.clear();
+                            mList.addAll(list);
+                            mAdapter.initList(mList);
                         } else {
                             mAdapter.addList(list);
                         }
@@ -201,6 +203,7 @@ public class CartFragment extends BaseFragment {
         rl.setVisibility(hasGoods?View.VISIBLE:View.GONE);
         layoutGoodsPrice.setVisibility(hasGoods?View.VISIBLE:View.GONE);
     }
+
     public void sumPrice() {
         int sumPrice =0;
         int savePrice =0;
@@ -227,10 +230,8 @@ public class CartFragment extends BaseFragment {
     }
 
     class UpdatePriceReceiver extends BroadcastReceiver{
-
         @Override
         public void onReceive(Context context, Intent intent) {
-            //IntentFilter filter = new IntentFilter(I.BRAODCASE_UPDATE_GOODS_PRICE);
             sumPrice();
         }
     }

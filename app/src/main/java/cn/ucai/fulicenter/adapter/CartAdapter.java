@@ -45,8 +45,9 @@ public class CartAdapter extends Adapter {
 
     public CartAdapter(Context context, ArrayList<CartBean> list) {
         this.mContext = context;
-        this.mList = new ArrayList<CartBean>();
-        this.mList.addAll(list);
+        this.mList = list;
+        //this.mList = new ArrayList<CartBean>();
+        //this.mList.addAll(list);
     }
 
     public boolean isMore() {
@@ -118,10 +119,11 @@ public class CartAdapter extends Adapter {
     }
 
     public void initList(ArrayList<CartBean> list) {
-        if (mList != null) {
+       /* if (mList != null) {
             mList.clear();
-        }
-        mList.addAll(list);
+        }*/
+       // mList.addAll(list);
+        mList = list;
         notifyDataSetChanged();
     }
 
